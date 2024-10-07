@@ -1,10 +1,9 @@
 #hide
-' EACH ROW IS A DIFFERENT MATERIAL
 M = [24.00; 17.00; 0.50; 21.50; 2.50; 3.50; 11000.00; 9100.00; 300.00; 650.00; 365.00; 400.00| _
 24.00; 19.20; 0.50; 24.00; 2.50; 3.50; 11500.00; 9600.00; 300.00; 650.00; 385.00; 420.00| _
 24.00; 14.50; 0.40; 21.00; 2.50; 4.00; 11000.00; 7400.00; 370.00; 690.00; 350.00; 420.00]
+#show
 #def timber$(num$)
-	#show
 	'<div style="text-align: center;">
 	'<table class="bordered" style="text-align:center;width:15cm;margin: 5mm auto">
 	'<thead>
@@ -50,7 +49,6 @@ M = [24.00; 17.00; 0.50; 21.50; 2.50; 3.50; 11000.00; 9100.00; 300.00; 650.00; 3
 	'</div>
 #end def
 #def timber_multi$(num$)
-	#show
 	'<div style="text-align: center;">
 	'<table class="bordered" style="text-align:center;width:15cm;margin: 5mm auto">
 	'<thead>
