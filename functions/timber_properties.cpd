@@ -1,9 +1,8 @@
 #hide
 ' EACH ROW IS A DIFFERENT MATERIAL
-M_1(i) = take(i; 24.00; 17.00; 0.50; 21.50; 2.50; 3.50; 11000.00; 9100.00; 300.00; 650.00; 365.00; 400.00)'GL24c
-M_2(i) = take(i; 24.00; 19.20; 0.50; 24.00; 2.50; 3.50; 11500.00; 9600.00; 300.00; 650.00; 385.00; 420.00)'GL24h
-M_3(i) = take(i; 24.00; 14.50; 0.40; 21.00; 2.50; 4.00; 11000.00; 7400.00; 370.00; 690.00; 350.00; 420.00)'C24
-M(i; j) = take(j; M_1(i); M_2(i); M_3(i))
+M = [24.00; 17.00; 0.50; 21.50; 2.50; 3.50; 11000.00; 9100.00; 300.00; 650.00; 365.00; 400.00| _
+24.00; 19.20; 0.50; 24.00; 2.50; 3.50; 11500.00; 9600.00; 300.00; 650.00; 385.00; 420.00| _
+24.00; 14.50; 0.40; 21.00; 2.50; 4.00; 11000.00; 7400.00; 370.00; 690.00; 350.00; 420.00]
 #def timber$(num$)
 	#show
 	'<div style="text-align: center;">
@@ -20,18 +19,18 @@ M(i; j) = take(j; M_1(i); M_2(i); M_3(i))
 	'</tr> 
 	'</thead>
 	#hide
-	f_m,k = M(1; id_timber)*MPa
-	f_t,0,k = M(2; id_timber)*MPa
-	f_t,90,k = M(3; id_timber)*MPa
-	f_c,0,k = M(4; id_timber)*MPa
-	f_c,90,k = M(5; id_timber)*MPa
-	f_v,k = M(6; id_timber)*MPa
-	E_0,mean = M(7; id_timber)*MPa
-	E_0,05 = M(8; id_timber)*MPa
-	E_90,mean = M(9; id_timber)*MPa
-	G_mean = M(10; id_timber)*MPa
-	r_k = M(11; id_timber)*kg/m^3
-	r_mean = M(12; id_timber)*kg/m^3
+	f_m,k = take(id_timber; 1; M)*MPa
+	f_t,0,k = take(id_timber; 2; M)*MPa
+	f_t,90,k = take(id_timber; 3; M)*MPa
+	f_c,0,k = take(id_timber; 4; M)*MPa
+	f_c,90,k = take(id_timber; 5; M)*MPa
+	f_v,k = take(id_timber; 6; M)*MPa
+	E_0,mean = take(id_timber; 7; M)*MPa
+	E_0,05 = take(id_timber; 8; M)*MPa
+	E_90,mean = take(id_timber; 9; M)*MPa
+	G_mean = take(id_timber; 10; M)*MPa
+	r_k = take(id_timber; 11; M)*kg/m^3
+	r_mean = take(id_timber; 12; M)*kg/m^3
 	f_m,d = f_m,k*k_mod/γ_M
 	f_t,0,d = f_t,0,k*k_mod/γ_M
 	f_t,90,d = f_t,90,k*k_mod/γ_M
@@ -66,18 +65,18 @@ M(i; j) = take(j; M_1(i); M_2(i); M_3(i))
 	'</tr> 
 	'</thead>
 	#hide
-	f_m,k,num$ = M(1; id_timber)*MPa
-	f_t,0,k,num$ = M(2; id_timber)*MPa
-	f_t,90,k,num$ = M(3; id_timber)*MPa
-	f_c,0,k,num$ = M(4; id_timber)*MPa
-	f_c,90,k,num$ = M(5; id_timber)*MPa
-	f_v,k,num$ = M(6; id_timber)*MPa
-	E_0,mean,num$ = M(7; id_timber)*MPa
-	E_0,05,num$ = M(8; id_timber)*MPa
-	E_90,mean,num$ = M(9; id_timber)*MPa
-	G_mean,num$ = M(10; id_timber)*MPa
-	r_k,num$ = M(11; id_timber)*kg/m^3
-	r_mean,num$ = M(12; id_timber)*kg/m^3
+	f_m,k,num$ = take(id_timber; 1; M)*MPa
+	f_t,0,k,num$ = take(id_timber; 2; M)*MPa
+	f_t,90,k,num$ = take(id_timber; 3; M)*MPa
+	f_c,0,k,num$ = take(id_timber; 4; M)*MPa
+	f_c,90,k,num$ = take(id_timber; 5; M)*MPa
+	f_v,k,num$ = take(id_timber; 6; M)*MPa
+	E_0,mean,num$ = take(id_timber; 7; M)*MPa
+	E_0,05,num$ = take(id_timber; 8; M)*MPa
+	E_90,mean,num$ = take(id_timber; 9; M)*MPa
+	G_mean,num$ = take(id_timber; 10; M)*MPa
+	r_k,num$ = take(id_timber; 11; M)*kg/m^3
+	r_mean,num$ = take(id_timber; 12; M)*kg/m^3
 	f_m,d,num$ = f_m,k,num$*k_mod/γ_M
 	f_t,0,d,num$ = f_t,0,k,num$*k_mod/γ_M
 	f_t,90,d,num$ = f_t,90,k,num$*k_mod/γ_M
