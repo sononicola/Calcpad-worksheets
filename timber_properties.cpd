@@ -1,0 +1,50 @@
+#hide
+' OGNI RIGA è UN MATERIALE DIVERSO
+M_1(i) = take(i; 24.00; 17.00; 0.50; 21.50; 2.50; 3.50; 11000.00; 9100.00; 300.00; 650.00; 365.00; 400.00)'GL24c
+M_2(i) = take(i; 24.00; 19.20; 0.50; 24.00; 2.50; 3.50; 11500.00; 9600.00; 300.00; 650.00; 385.00; 420.00)'GL24h
+M_3(i) = take(i; 24.00; 14.50; 0.40; 21.00; 2.50; 4.00; 11000.00; 7400.00; 370.00; 690.00; 350.00; 420.00)'C24
+M(i; j) = take(j; M_1(i); M_2(i); M_3(i))
+#show
+'<div style="text-align: center;">
+'<table class="bordered" style="text-align:center;width:15cm;margin: 5mm auto">
+'<thead>
+'<tr><th colspan="3">
+'Caratteristiche meccaniche legno<select name="timber_material">
+'<option value="1">GL24c</option>
+'<option value="2">GL24h</option>
+'<option value="3">C24</option>
+'</select>
+'<p id="timber_material" style="display:none;">'id_timber = ? {3}'</p> 'γ_M = ? {1.3}'  'k_mod = ? {0.9}
+'</th>
+'</tr> 
+'</thead>
+#hide
+f_m,k = M(1; id_timber)*MPa
+f_t,0,k = M(2; id_timber)*MPa
+f_t,90,k = M(3; id_timber)*MPa
+f_c,0,k = M(4; id_timber)*MPa
+f_c,90,k = M(5; id_timber)*MPa
+f_v,k = M(6; id_timber)*MPa
+E_0,mean = M(7; id_timber)*MPa
+E_0,05 = M(8; id_timber)*MPa
+E_90,mean = M(9; id_timber)*MPa
+G_mean = M(10; id_timber)*MPa
+r_k = M(11; id_timber)*kg/m^3
+r_mean = M(12; id_timber)*kg/m^3
+f_m,d = f_m,k*k_mod/γ_M
+f_t,0,d = f_t,0,k*k_mod/γ_M
+f_t,90,d = f_t,90,k*k_mod/γ_M
+f_c,0,d = f_c,0,k*k_mod/γ_M
+f_c,90,d = f_c,90,k*k_mod/γ_M
+f_v,d = f_v,k*k_mod/γ_M
+#show
+'<tbody>
+'<tr><td>'f_m,k'</td><td>'f_m,d'</td><td>'E_0,mean'</td></tr>
+'<tr><td>'f_t,0,k'</td><td>'f_t,0,d'</td><td>'E_0,05'</td></tr>
+'<tr><td>'f_t,90,k'</td><td>'f_t,90,d'</td><td>'E_90,mean'</td></tr>
+'<tr><td>'f_c,0,k'</td><td>'f_c,0,d'</td><td>'G_mean'</td></tr>
+'<tr><td>'f_c,90,k'</td><td>'f_c,90,d'</td><td>'r_k'</td></tr>
+'<tr><td>'f_v,k'</td><td>'f_v,d'</td><td>'r_mean'</td></tr>
+'</tbody>
+'</table>
+'</div>

@@ -1,0 +1,33 @@
+#def calc_area$(n$; diam$)
+	 n$*π*(diam$)^2/4
+#end def
+#def check$(x$; x_max$)
+	    #if x$ ≤ x_max$
+		'<p class="ok">Verifica soddisfatta:'x$'≤'x_max$'✓</p>
+	    #else
+		        '<p class="err">Verifica non soddisfatta:'x$'>'x_max$'✖</p>
+	    #end if
+#end def
+#def check_ratio$(x$; x_max$)
+	    #if x$/x_max$ ≤ 1
+		'<p class="ok">Verifica soddisfatta:'x$/x_max$|%'✓</p>
+	    #else
+		        '<p class="err">Verifica non soddisfatta:'x$/x_max$|%'✖</p>
+	    #end if
+#end def
+#def check_inline$(x$; x_max$)
+	    #if x$ ≤ x_max$
+		        x$'≤'x_max$'<span class="ok">Ok ✓</span>
+	    #else
+		x$'>'x_max$'<span class="err"> NO ✖</span>
+		
+	    #end if
+#end def
+#def check_ratio_inline$(x$; x_max$)
+	    #if x$/x_max$ ≤ 1
+		        x$/x_max$|%'<span class="ok">Ok ✓</span>
+	    #else
+		x$/x_max$|%'<span class="err"> NO ✖</span>
+		
+	    #end if
+#end def

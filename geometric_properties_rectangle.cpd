@@ -1,0 +1,23 @@
+'<div style="text-align: center;">
+'<table class="bordered" style="text-align:center;width:15cm;margin: 5mm auto">
+'<thead>
+'<tr><th colspan="2">Caratteristiche sezione rettangolare 'b = ? {120}mm' 'h = ? {240}mm'</th></tr>
+'</thead>
+#hide
+A = b*h|cm^2
+g_1,k = A*0.5kN/m^3|kN/m
+I_y = b*h^3/12|cm^4
+I_z = h*b^3/12|cm^4
+W_y = b*h^2/6|cm^3
+W_z = h*b^2/6|cm^3
+i_y = sqrt(I_y/A)
+i_z = sqrt(I_z/A)
+#show
+'<tbody>
+'<tr><td>'A'</td><td>'g_1,k'</td></tr>
+'<tr><td>'I_y'</td><td>'I_z'</td></tr>
+'<tr><td>'W_y'</td><td>'W_z'</td></tr>
+'<tr><td>'i_y'</td><td>'i_z'</td></tr>
+'</tbody>
+'</table>
+'</div>
