@@ -1,10 +1,10 @@
+'<style>body {zoom: 0.7;}</style>
 #include functions/timber_properties.cpd
-#include functions/geometric_properties_rectangle.cpd
+#include functions/geometric_properties.cpd
 #include functions/utils.cpd
-
 "Create a new timber material:
-' All variables shown in the tables are created
-' Param: the index needed to use the html selector
+'All variables shown in the tables are created
+'Param: the index needed to use the html selector
 timber$(1) #{3; 1.3; 0.9}
 f_c,0,d
 
@@ -23,7 +23,7 @@ timber_multi$(purlin) #{3; 1.3; 0.9}
 '<hr />
 "Calculate the geometric properties for a rectangle
 'Same behavior as before. This time the index is not needed
-rectangle$ #{120; 240; 5}
+rectangle$  #{120; 240; 5}
 rectangle_multi$(1) #{120; 240; 5}
 rectangle_multi$(2) #{140; 240; 5}
 rectangle_multi$(beam) #{240; 2400; 5}

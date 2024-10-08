@@ -1,0 +1,61 @@
+'<style>body {zoom:0.7}</style>
+'<h2>TIMBER BEAM N. 001</h2>'
+'<hr />
+#include functions/timber_properties.cpd
+#include functions/geometric_properties.cpd
+#include functions/utils.cpd
+timber$(1) #{10; 1.35; 0.8}
+rectangle$ #{200; 400; 5}
+l = 8.786m
+k_m = 0.7'legno massiccio, sezioni rettangolari
+β_c = 0.1'legno lammellare
+l_0,y = 8.786m
+l_0,z = 8.786m
+β = 1'coef. di vincolo 
+"Azioni agenti
+M_Ed,y = 218.47kNm
+M_Ed,z = 0kNm
+N_Ed = 0kN
+V_Ed,y = 0kN
+V_Ed,z = 73.27kN
+
+"Tensioni agenti
+σ_c,0,d = N_Ed/A|MPa
+σ_m,y,d = M_Ed,y/W_y|MPa
+σ_m,z,d = M_Ed,z/W_y|MPa
+k_cr = 2.5MPa/f_v,k
+τ_y,d = 1.5*V_Ed,y/(k_cr*A)|MPa
+τ_z,d = 1.5*V_Ed,z/(k_cr*A)|MPa
+
+"Verifica flessione 
+check_inline$((σ_m,y,d/f_m,d + k_m*(σ_m,z,d/f_m,d)); 1)
+check_inline$((k_m*(σ_m,y,d/f_m,d) + σ_m,z,d/f_m,d); 1)
+
+"Verifica flessione e compressione combinata
+'<span class="ref"> [EC5 §6.2.4]</span>'
+check_inline$(((σ_c,0,d/f_c,0,d)^2 + σ_m,y,d/f_m,d + k_m*(σ_m,z,d/f_m,d)); 1)
+check_inline$(((σ_c,0,d/f_c,0,d)^2 + k_m*(σ_m,y,d/f_m,d) + σ_m,z,d/f_m,d); 1)
+
+"Verifica instabilità di colonna
+'<span class="ref"> [EC5 §6.3.2]</span>'
+λ_y = l_0,y/i_y
+λ_rel,y = λ_y/π*sqrt(f_c,0,k/E_0,05)
+k_y = 0.5*(1 + β_c*(λ_rel,y - 0.3) + λ_rel,y^2)
+k_c,y = 1/(k_y + sqrt(k_y^2 - λ_rel,y^2))
+
+λ_z = l_0,z/i_z
+λ_rel,z = λ_z/π*sqrt(f_c,0,k/E_0,05)
+k_z = 0.5*(1 + β_c*(λ_rel,z - 0.3) + λ_rel,z^2)
+k_c,z = 1/(k_z + sqrt(k_z^2 - λ_rel,z^2))
+check_inline$((σ_c,0,d/(k_c,y*f_c,0,d) + σ_m,y,d/f_m,d + k_m*(σ_m,z,d/f_m,d)); 1)
+check_inline$((σ_c,0,d/(k_c,z*f_c,0,d) + k_m*(σ_m,y,d/f_m,d) + σ_m,z,d/f_m,d); 1)
+
+"Verifica instabilità di trave 
+'<span class="ref"> [EC5 §6.3.3]</span>'
+l_ef = β*l
+σ_m,crit = 0.78*b^2/(h*l_ef)*E_0,05
+λ_rel,m = sqrt(f_m,k/σ_m,crit)
+k_crit = switch(λ_rel,m < 0.75; 1; λ_rel,m < 1.4; 1.56 - 0.75*λ_rel,m; 1/λ_rel,m^2)
+check_inline$(σ_m,y,d/(k_crit*f_m,d); 1)
+check_inline$((σ_m,y,d/(k_crit*f_m,d))^2 + σ_c,0,d/(k_c,z*f_c,0,d); 1)
+
