@@ -22,7 +22,7 @@ V_Ed,z = 73.27kN
 "Tensioni agenti
 σ_c,0,d = N_Ed/A|MPa
 σ_m,y,d = M_Ed,y/W_y|MPa
-σ_m,z,d = M_Ed,z/W_y|MPa
+σ_m,z,d = M_Ed,z/W_z|MPa
 k_cr = 2.5MPa/f_v,k
 τ_y,d = 1.5*V_Ed,y/(k_cr*A)|MPa
 τ_z,d = 1.5*V_Ed,z/(k_cr*A)|MPa
@@ -47,6 +47,7 @@ k_c,y = 1/(k_y + sqrt(k_y^2 - λ_rel,y^2))
 λ_rel,z = λ_z/π*sqrt(f_c,0,k/E_0,05)
 k_z = 0.5*(1 + β_c*(λ_rel,z - 0.3) + λ_rel,z^2)
 k_c,z = 1/(k_z + sqrt(k_z^2 - λ_rel,z^2))
+
 check_inline$((σ_c,0,d/(k_c,y*f_c,0,d) + σ_m,y,d/f_m,d + k_m*(σ_m,z,d/f_m,d)); 1)
 check_inline$((σ_c,0,d/(k_c,z*f_c,0,d) + k_m*(σ_m,y,d/f_m,d) + σ_m,z,d/f_m,d); 1)
 
