@@ -5,7 +5,7 @@
 #include functions/geometric_properties.cpd
 #include functions/utils.cpd
 timber$(1) #{10; 1.35; 0.8}
-rectangle$ #{200; 400; 5}
+rectangle$ #{160; 840; 5}
 l = 8.786m
 k_m = 0.7'legno massiccio, sezioni rettangolari
 β_c = 0.1'legno lammellare
@@ -36,6 +36,10 @@ check_inline$((k_m*(σ_m,y,d/f_m,d) + σ_m,z,d/f_m,d); 1)
 check_inline$(((σ_c,0,d/f_c,0,d)^2 + σ_m,y,d/f_m,d + k_m*(σ_m,z,d/f_m,d)); 1)
 check_inline$(((σ_c,0,d/f_c,0,d)^2 + k_m*(σ_m,y,d/f_m,d) + σ_m,z,d/f_m,d); 1)
 
+"Verifica a taglio
+check_ratio_inline$(τ_y,d; f_v,d)
+check_ratio_inline$(τ_z,d; f_v,d)
+
 "Verifica instabilità di colonna
 '<span class="ref"> [EC5 §6.3.2]</span>'
 λ_y = l_0,y/i_y
@@ -59,4 +63,3 @@ l_ef = β*l
 k_crit = switch(λ_rel,m < 0.75; 1; λ_rel,m < 1.4; 1.56 - 0.75*λ_rel,m; 1/λ_rel,m^2)
 check_inline$(σ_m,y,d/(k_crit*f_m,d); 1)
 check_inline$((σ_m,y,d/(k_crit*f_m,d))^2 + σ_c,0,d/(k_c,z*f_c,0,d); 1)
-
