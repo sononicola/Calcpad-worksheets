@@ -164,9 +164,64 @@ M = [20.00; 16.00; 0.50; 20.00; 2.50; 3.50; 8400.00; 7000.00; 300.00; 650.00; 34
 	'<thead>
 	'<tr><th colspan="3">
 	'Caratteristiche meccaniche legno<select name="timber_material_num$">
-	'<option value="1">GL24c</option>
-	'<option value="2">GL24h</option>
-	'<option value="3">C24</option>
+	'<option value="1">GL20h</option>
+	'<option value="2">GL22h</option>
+	'<option value="3">GL24h</option>
+	'<option value="4">GL26h</option>
+	'<option value="5">GL28h</option>
+	'<option value="6">GL30h</option>
+	'<option value="7">GL32h</option>
+	'<option value="8">GL20c</option>
+	'<option value="9">GL22c</option>
+	'<option value="10">GL24c</option>
+	'<option value="11">GL26c</option>
+	'<option value="12">GL28c</option>
+	'<option value="13">GL30c</option>
+	'<option value="14">GL32c</option>
+	'<option value="15">C14</option>
+	'<option value="16">C16</option>
+	'<option value="17">C18</option>
+	'<option value="18">C20</option>
+	'<option value="19">C22</option>
+	'<option value="20">C24</option>
+	'<option value="21">C27</option>
+	'<option value="22">C30</option>
+	'<option value="23">C35</option>
+	'<option value="24">C40</option>
+	'<option value="25">C45</option>
+	'<option value="26">C50</option>
+	'<option value="27">D18</option>
+	'<option value="28">D24</option>
+	'<option value="29">D27</option>
+	'<option value="30">D30</option>
+	'<option value="31">D35</option>
+	'<option value="32">D40</option>
+	'<option value="33">D45</option>
+	'<option value="34">D50</option>
+	'<option value="35">D55</option>
+	'<option value="36">D60</option>
+	'<option value="37">D65</option>
+	'<option value="38">D70</option>
+	'<option value="39">D75</option>
+	'<option value="40">D80</option>
+	'<option value="41">T8</option>
+	'<option value="42">T9</option>
+	'<option value="43">T10</option>
+	'<option value="44">T11</option>
+	'<option value="45">T12</option>
+	'<option value="46">T13</option>
+	'<option value="47">T14</option>
+	'<option value="48">T14,5</option>
+	'<option value="49">T15</option>
+	'<option value="50">T16</option>
+	'<option value="51">T18</option>
+	'<option value="52">T21</option>
+	'<option value="53">T22</option>
+	'<option value="54">T24</option>
+	'<option value="55">T26</option>
+	'<option value="56">T27</option>
+	'<option value="57">T28</option>
+	'<option value="58">T30</option>
 	'</select>
 	'<p id="timber_material_num$" style="display:none;">'id_timber = ? {3}'</p> 'γ_M = ? {1.3}'  'k_mod = ? {0.9}
 	'</th>
@@ -203,3 +258,4 @@ M = [20.00; 16.00; 0.50; 20.00; 2.50; 3.50; 8400.00; 7000.00; 300.00; 650.00; 34
 	'</table>
 	'</div>
 #end def
+
