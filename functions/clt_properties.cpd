@@ -1,10 +1,20 @@
-cltLayers = [30mm; 0| _
 40mm; 90| _
 30mm; 0| _
 40mm; 90| _
 30mm; 0]
 
 
+#def check_cltData$(cltLayers$)
+	#hide
+	n = n_rows(cltLayers$)
+	#show
+	#for layer = 1 : n
+		#if cltLayers$.(layer; 2) ≠ 0 ∧ cltLayers$.(layer; 2) ≠ 90
+			"ERROR: CLT LAYERS' DIRECTIONS MUST BE 0° OR 90°
+			#break
+		#end if
+	#loop
+#end def
 #def calc_cltProperties$(cltLayers$; width$)
 	#hide
 	t_net = 0mm
@@ -24,8 +34,8 @@ cltLayers = [30mm; 0| _
 #end def
 
 
-calc_cltProperties$(cltLayers; 100mm)
 calc_cltProperties$(CLTLayers; 100mm)
+check_cltData$(CLTLayers)
 
 
 
