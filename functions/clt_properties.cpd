@@ -1,0 +1,32 @@
+cltLayers = [30mm; 0| _
+40mm; 90| _
+30mm; 0| _
+40mm; 90| _
+30mm; 0]
+
+
+#def calc_cltProperties$(cltLayers$; width$)
+	#hide
+	t_net = 0mm
+	n = n_rows(cltLayers$)
+	#for layer = 1 : n
+		#if cltLayers.(layer; 2) ≡ 0
+			t_net = t_net + cltLayers.(layer; 1)
+			layer
+		#end if
+	#loop
+	t_full = sum(col(cltLayers$; 1))
+	#show
+	t_full
+	t_net
+	A_full = t_full*width$
+	A_net = t_net*width$
+#end def
+
+
+calc_cltProperties$(cltLayers; 100mm)
+
+
+
+
+
