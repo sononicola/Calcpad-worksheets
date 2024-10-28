@@ -1,0 +1,23 @@
+#include functions/CLT_properties.cpd
+#include functions/timber_properties.cpd
+
+timber$(1) #{20; 1.3; 0.9}
+CLTLayers = [30mm; 0| _
+40mm; 90| _
+30mm; 0| _
+40mm; 90| _
+30mm; 0]
+
+l_wall = 1m
+h_wall = 3m
+A_lat = l_wall*h_wall
+calc_cltProperties$(CLTLayers; l_wall)
+"Azioni agenti
+M_Ed,y = 218.47kNm
+M_Ed,z = 0kNm
+N_Ed = 0kN
+V_Ed,y = 0kN
+V_Ed,z = 73.27kN
+
+"Tensioni agenti
+σ_c,0,d = N_Ed/A_net|MPa
