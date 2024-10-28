@@ -10,8 +10,8 @@ cltLayers = [30mm; 0| _
 	t_net = 0mm
 	n = n_rows(cltLayers$)
 	#for layer = 1 : n
-		#if cltLayers.(layer; 2) ≡ 0
-			t_net = t_net + cltLayers.(layer; 1)
+		#if cltLayers$.(layer; 2) ≡ 0
+			t_net = t_net + cltLayers$.(layer; 1)
 			layer
 		#end if
 	#loop
@@ -25,7 +25,7 @@ cltLayers = [30mm; 0| _
 
 
 calc_cltProperties$(cltLayers; 100mm)
-
+calc_cltProperties$(CLTLayers; 100mm)
 
 
 
