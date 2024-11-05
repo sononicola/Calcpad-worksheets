@@ -1,3 +1,4 @@
+
 #def check_cltData$(cltLayers$)
 	#hide
 	n = n_rows(cltLayers$)
@@ -9,11 +10,12 @@
 		#end if
 	#loop
 #end def
-#def calc_cltProperties$(cltLayers$; width$)
+#def calc_cltProperties$(cltLayers$; width$; height$)
 	check_cltData$(cltLayers$)
 	#hide
 	t_net = 0mm
 	n = n_rows(cltLayers$)
+	
 	#for layer = 1 : n
 		#if cltLayers$.(layer; 2) ≡ 0
 			t_net = t_net + cltLayers$.(layer; 1)
@@ -21,6 +23,26 @@
 		#end if
 	#loop
 	t_full = sum(col(cltLayers$; 1))
+	t_cumSum = vector(n)
+	t_centreFromBottom = vector(n)
+	t_centreFromMiddle = vector(n)
+	t_sum = 0mm
+	
+	#for layer = 1 : n
+		
+		t_sum = t_sum + cltLayers$.(layer; 1)
+		t_cumSum.(layer) = t_sum
+		t_centreFromBottom.(layer) = t_cumSum.(layer) - cltLayers$.(layer; 1)/2
+		t_centreFromMiddle.(layer) = t_centreFromBottom.(layer) - t_full/2
+	#loop
+	
+	I_x = 0mm^4
+	I_y = 0mm^4
+	#for layer = 1 : n
+		#if cltLayers$.(layer; 2) ≡ 0
+	#loop
+	W_x = I_x/(t_full/2)
+	W_y = I_y/(t_full/2)
 	#show
 	t_full
 	t_net
