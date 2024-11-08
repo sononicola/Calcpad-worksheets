@@ -1,7 +1,7 @@
 #include functions/CLT_properties.cpd
 #include functions/timber_properties.cpd
 #include functions/utils.cpd
-
+'<img style="height:70%; width:70%;" src="C:/Users/nicola/Google Drive/CALCPAD TEMPLATES/Calcpad-worksheets/Images/CLT_naming.png" alt="CLT_naming.png">
 timber$(1) #{20; 1.25; 0.6}
 CLTLayers = [27mm; 0| _
 17mm; 90| _
@@ -16,13 +16,13 @@ k_m = 0.7'legno massiccio, sezioni rettangolari
 k_sys = min(0.1; 1 + 0.1*b_wall/m)
 A_lat = b_wall*h_wall
 calc_cltProperties$(CLTLayers; b_wall;h_wall)
-I_y
-I_z
-W_y
-W_z
+I_x|cm^4
+I_y|cm^4
+W_x|cm^3
+W_y|cm^3
 A_net
 E_0,mean*A_net
-E_0,mean*I_y|kN*m^2
+E_0,mean*I_x|kN*m^2
 G_mean*A_net
 
 
@@ -46,16 +46,12 @@ V_Ed,z = 73.27kN
 'τ_z,d = 1.5*V_Ed,z/(k_cr*A)|MPa
 
 
-i_y = sqrt(I_y/A_net)
-i_z = sqrt(I_z/(A_full - A_net))
-"da vedere se ha senso i_z. quale area ha?
-"Verifica instabilità di colonna
+i_x = sqrt(I_x/A_net)
+i_y = sqrt(I_y/(A_full - A_net))
+
 '<span class="ref"> [EC5 §6.3.2]</span>'
 λ_y = h_wall/i_y
 λ_rel,y = λ_y/π*sqrt(f_c,0,k/E_0,05)
 k_y = 0.5*(1 + β_c*(λ_rel,y - 0.3) + λ_rel,y^2)
 k_c,y = 1/(k_y + sqrt(k_y^2 - λ_rel,y^2))
-
-
-
 
