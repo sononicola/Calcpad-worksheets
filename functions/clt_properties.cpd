@@ -1,4 +1,3 @@
-
 #def check_cltData$(cltLayers$)
 	#hide
 	n = n_rows(cltLayers$)
@@ -10,12 +9,35 @@
 		#end if
 	#loop
 #end def
+#def draw_clt$(cltLayers$; bx$; by$; t_full$)
+	#val
+	#hide
+	WIDTHX = 1*bx$|cm
+	WIDTHY = 1*by$|cm
+	HEIGHT = .5*t_full$|cm
+	n = n_rows(cltLayers$)
+	#show
+	 '<svg width = "100"height = "100"viewBox = "0 0 100 100">  
+	#for layer = 1 : n
+		#if layer ≡ 1
+			'<rect x="'0mm'" y="'0mm'" width="'WIDTHX'" height="'cltLayers$.(layer; 1)|mm'" style="stroke:black; stroke-width:2; fill:orange; fill-opacity:0.6; stroke-opacity:1" />
+			'<rect x="'WIDTHX + 500mm'" y="'0mm'" width="'WIDTHY'" height="'cltLayers$.(layer; 1)|mm'" style="stroke:black; stroke-width:2; fill:yellow; fill-opacity:0.6; stroke-opacity:1" />
+		#else if layer⦼2 ≡ 0
+			'<rect x="'0mm'" y="'t_cumSum.(layer - 1)|mm'" width="'WIDTHX'" height="'cltLayers$.(layer; 1)|mm'" style="stroke:black; stroke-width:2; fill:yellow; fill-opacity:0.6; stroke-opacity:1" />
+			'<rect x="'WIDTHX + 500mm'" y="'t_cumSum.(layer - 1)|mm'" width="'WIDTHY'" height="'cltLayers$.(layer; 1)|mm'" style="stroke:black; stroke-width:2; fill:orange; fill-opacity:0.6; stroke-opacity:1" />
+		#else
+			'<rect x="'0mm'" y="'t_cumSum.(layer - 1)|mm'" width="'WIDTHX'" height="'cltLayers$.(layer; 1)|mm'" style="stroke:black; stroke-width:2; fill:orange; fill-opacity:0.6; stroke-opacity:1" />
+			'<rect x="'WIDTHX + 500mm'" y="'t_cumSum.(layer - 1)|mm'" width="'WIDTHY'" height="'cltLayers$.(layer; 1)|mm'" style="stroke:black; stroke-width:2; fill:yellow; fill-opacity:0.6; stroke-opacity:1" />
+		#end if
+	#loop
+	'</svg>
+	#equ
+#end def
 #def calc_cltProperties$(cltLayers$; width$; height$)
 	check_cltData$(cltLayers$)
 	#hide
 	t_net = 0mm
 	n = n_rows(cltLayers$)
-	
 	#for layer = 1 : n
 		#if cltLayers$.(layer; 2) ≡ 0
 			t_net = t_net + cltLayers$.(layer; 1)
@@ -27,21 +49,17 @@
 	t_centreFromBottom = vector(n)
 	t_centreFromMiddle = vector(n)
 	t_sum = 0mm
-	
 	#for layer = 1 : n
-		
 		t_sum = t_sum + cltLayers$.(layer; 1)
 		t_cumSum.(layer) = t_sum
 		t_centreFromBottom.(layer) = t_cumSum.(layer) - cltLayers$.(layer; 1)/2
 		t_centreFromMiddle.(layer) = t_centreFromBottom.(layer) - t_full/2
 	#loop
-	
 	I_y = 0mm^4
 	I_z = 0mm^4
 	#for layer = 1 : n
 		#if cltLayers$.(layer; 2) ≡ 0
 			I_y = I_y + width$*(cltLayers$.(layer; 1)^3/12 + cltLayers$.(layer; 1)*t_centreFromMiddle.(layer)^2)
-			
 		#end if
 		#if cltLayers$.(layer; 2) ≡ 90
 			I_z = I_z + height$*(cltLayers$.(layer; 1)^3/12 + cltLayers$.(layer; 1)*t_centreFromMiddle.(layer)^2)
@@ -49,8 +67,8 @@
 	#loop
 	W_y = I_y/(t_full/2)
 	W_z = I_z/(t_full/2)
-	
 	A_full = t_full*width$
 	A_net = t_net*width$
 	#show
+	draw_clt$(cltLayers$; width$; height$; t_full)
 #end def

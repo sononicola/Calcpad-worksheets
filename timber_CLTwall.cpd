@@ -8,20 +8,14 @@ CLTLayers = [27mm; 0| _
 54mm; 0| _
 17mm; 90| _
 27mm; 0]
-
 b_wall = 1.55m
-
 h_wall = 2.95m
-
-
 k_m = 0.7'legno massiccio, sezioni rettangolari
 β_c = 0.1'legno lammellare
 β = 1'coef. di vincolo 
 k_sys = min(0.1; 1 + 0.1*b_wall/m)
 A_lat = b_wall*h_wall
 calc_cltProperties$(CLTLayers; b_wall;h_wall)
-#show
-
 I_y
 I_z
 W_y
@@ -61,4 +55,7 @@ i_z = sqrt(I_z/(A_full - A_net))
 λ_rel,y = λ_y/π*sqrt(f_c,0,k/E_0,05)
 k_y = 0.5*(1 + β_c*(λ_rel,y - 0.3) + λ_rel,y^2)
 k_c,y = 1/(k_y + sqrt(k_y^2 - λ_rel,y^2))
+
+
+
 
