@@ -23,18 +23,16 @@
 	WIDTHY = 1*by$|cm
 	HEIGHT = .5*t_full$|cm
 	n = n_rows(cltLayers$)
+	t_cumSum0 = join(0mm; t_cumSum)
 	#show
 	 '<svg width = "100"height = "100"viewBox = "0 0 100 100">  
 	#for layer = 1 : n
-		#if layer ≡ 1
-			draw_layer_h_0$(0mm; 0mm; WIDTHX; cltLayers$.(layer; 1)|mm)
-			draw_layer_h_90$(WIDTHX + 500mm; 0mm; WIDTHY; cltLayers$.(layer; 1)|mm)
-		#else if layer⦼2 ≡ 0
-			draw_layer_h_90$(0mm; t_cumSum.(layer - 1)|mm; WIDTHX; cltLayers$.(layer; 1)|mm)
-			draw_layer_h_0$(WIDTHX + 500mm; t_cumSum.(layer - 1)|mm; WIDTHY; cltLayers$.(layer; 1)|mm)
-		#else
-			draw_layer_h_0$(0mm; t_cumSum.(layer - 1)|mm; WIDTHX; cltLayers$.(layer; 1)|mm)
-			draw_layer_h_90$(WIDTHX + 500mm; t_cumSum.(layer - 1)|mm; WIDTHY; cltLayers$.(layer; 1)|mm)
+		#if cltLayers$.(layer; 2) ≡ 0
+			draw_layer_h_0$(0mm; t_cumSum0.(layer)|mm; WIDTHX; cltLayers$.(layer; 1)|mm)
+			draw_layer_h_90$(WIDTHX + 500mm; t_cumSum0.(layer)|mm; WIDTHY; cltLayers$.(layer; 1)|mm)
+		#else 
+			draw_layer_h_90$(0mm; t_cumSum0.(layer)|mm; WIDTHX; cltLayers$.(layer; 1)|mm)
+			draw_layer_h_0$(WIDTHX + 500mm; t_cumSum0.(layer)|mm; WIDTHY; cltLayers$.(layer; 1)|mm)
 		#end if
 	#loop
 	'</svg>
@@ -79,24 +77,3 @@
 	#show
 	draw_clt$(cltLayers$; width$; height$; t_full)
 #end def
-
-CLTLayers = [27mm; 0| _
-17mm; 90| _
-54mm; 0| _
-17mm; 90| _
-27mm; 0]
-b_wall = 1.55m
-h_wall = 2.95m
-calc_cltProperties$(CLTLayers; b_wall;h_wall)
-
-
-
-
-CLTLayers = [27mm; 90| _
-17mm; 0| _
-54mm; 90| _
-17mm; 0| _
-27mm; 90]
-b_wall = 1.55m
-h_wall = 2.95m
-calc_cltProperties$(CLTLayers; b_wall;h_wall)
