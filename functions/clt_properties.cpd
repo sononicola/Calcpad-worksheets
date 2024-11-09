@@ -1,3 +1,4 @@
+#include functions/svg_drawing_mod.cpd' < !--COPIED FROM NED CODE - - > '
 #def draw_layer_h_0$(x$; y$; width$; height$)
 	'<rect x="'x$'" y="'y$'" width="'width$'" height="'height$'" style="stroke:black; stroke-width:2; fill:orange; fill-opacity:0.6; stroke-opacity:1" />
 #end def
@@ -50,18 +51,39 @@
 	'</svg>
 	#equ
 #end def
+#def table_CLT$
+	'<div style="text-align: center;">
+	'<table class="bordered" style="text-align:center;width:15cm;margin: 5mm auto">
+	'<thead>
+	'<tr><th colspan="2">
+	'Caratteristiche del pannello in CLT  
+	'</th >  
+	'</tr > 
+	'</thead>
+	#nosub
+	'<tbody>
+	'<tr><td>'A_x,net|cm^2'</td><td>'A_y,net|cm^2'</td></tr>
+	'<tr><td>'I_x|cm^4'</td><td>'I_y|cm^4'</td></tr>
+	'<tr><td>'W_x|cm^3'</td><td>'W_y|cm^3'</td></tr>
+	'<tr><td>'i_x|cm'</td><td>'i_y|cm'</td></tr>
+	'</tbody>
+	'</table>
+	'</div>
+	#varsub
+#end def
 #def calc_cltProperties$(cltLayers$; width$; height$)
 	check_cltData$(cltLayers$)
 	#hide
-	t_net = 0mm
+	t_x,net = 0mm
 	n = n_rows(cltLayers$)
 	#for layer = 1 : n
 		#if cltLayers$.(layer; 2) ≡ 0
-			t_net = t_net + cltLayers$.(layer; 1)
+			t_x,net = t_x,net + cltLayers$.(layer; 1)
 			layer
 		#end if
 	#loop
 	t_full = sum(col(cltLayers$; 1))
+	t_y,net = t_full - t_x,net
 	t_cumSum = vector(n)
 	t_centreFromBottom = vector(n)
 	t_centreFromMiddle = vector(n)
@@ -85,8 +107,12 @@
 	W_x = I_x/(t_full/2)
 	W_y = I_y/(t_full/2)
 	A_full = t_full*width$
-	A_net = t_net*width$
+	A_x,net = t_x,net*width$
+	A_y,net = t_y,net*width$
+	i_x = sqrt(I_x/A_x,net)
+	i_y = sqrt(I_y/A_y,net)
 	t_cumSum0 = join(0mm; t_cumSum)
 	#show
+	table_CLT$
 	draw_clt$(cltLayers$; width$; height$; t_full)
 #end def
