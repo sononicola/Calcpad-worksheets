@@ -1,20 +1,17 @@
 #include functions/svg_drawing_mod.cpd' < !--COPIED FROM NED CODE - - > '
-#def draw_layer_h_0$(x$; y$; width$; height$)
+#defdraw_layer_h_0$(x$; y$; width$; height$)
+	'<pattern id = "vLines" x="0" y="0" width="40" height="100" patternUnits="userSpaceOnUse">
+	'<line x1="40" y1="0" x2="40" y2="100" style="stroke:black; stroke-width:2; stroke-opacity:1" />
+	'</pattern > 
 	'<rect x="'x$'" y="'y$'" width="'width$'" height="'height$'" style="stroke:black; stroke-width:2; fill:orange; fill-opacity:0.6; stroke-opacity:1" />
+	'<rect x="'x$'" y="'y$'" width="'width$'" height="'height$'" fill="url(#vLines)" style="stroke:black; stroke-width:2; fill-opacity:.7; stroke-opacity:1" />
 #end def
 #def draw_layer_h_90$(x$; y$; width$; height$)
+	'<pattern id = "hLines" x="0" y="0" width="100" height="4" patternUnits="userSpaceOnUse">
+	'<line x1="0" y1="4" x2="100" y2="4" style="stroke:black; stroke-width:2; stroke-opacity:1" />
+	'</pattern > 
 	'<rect x="'x$'" y="'y$'" width="'width$'" height="'height$'" style="stroke:black; stroke-width:2; fill:yellow; fill-opacity:0.6; stroke-opacity:1" />
-#end def
-#def draw_boards_h$(x0$; y1$; width$; y2$)
-	#hide
-	n_boards = 3
-	spacing = width$/n_boards
-	#for k = 1 : n_boards - 1
-		#hide
-		x1 = k*spacing + x0$
-		#show
-		'<line x1="'x1'" y1="'y1$'" x2="'x1'" y2="'y2$'" style="stroke:black; stroke-width:2; stroke-opacity:0.8" />
-	#loop
+	'<rect x="'x$'" y="'y$'" width="'width$'" height="'height$'" fill="url(#hLines)" style="stroke:black; stroke-width:2; fill-opacity:.7; stroke-opacity:1" />
 #end def
 #def check_cltData$(cltLayers$)
 	#hide
@@ -40,12 +37,10 @@
 		#if cltLayers$.(layer; 2) ≡ 0
 			draw_layer_h_0$(0mm; t_cumSum0.(layer)|mm; WIDTHX; cltLayers$.(layer; 1)|mm)
 			draw_layer_h_90$(WIDTHX + 500mm; t_cumSum0.(layer)|mm; WIDTHY; cltLayers$.(layer; 1)|mm)
-			draw_boards_h$(0mm; t_cumSum0.(layer)|mm; WIDTHX; cltLayers$.(layer; 1) + t_cumSum0.(layer)|mm)
 			
 		#else 
 			draw_layer_h_90$(0mm; t_cumSum0.(layer)|mm; WIDTHX; cltLayers$.(layer; 1)|mm)
 			draw_layer_h_0$(WIDTHX + 500mm; t_cumSum0.(layer)|mm; WIDTHY; cltLayers$.(layer; 1)|mm)
-			draw_boards_h$(WIDTHX + 500mm; t_cumSum0.(layer)|mm; WIDTHY; cltLayers$.(layer; 1) + t_cumSum0.(layer)|mm)
 		#end if
 	#loop
 	'</svg>
