@@ -1,57 +1,45 @@
+'<style>body {zoom:0.7}</style>
 #include functions/CLT_properties.cpd
 #include functions/timber_properties.cpd
 #include functions/utils.cpd
-'<img style="height:70%; width:70%;" src="C:/Users/nicola/Google Drive/CALCPAD TEMPLATES/Calcpad-worksheets/Images/CLT_naming.png" alt="CLT_naming.png">
-timber$(1) #{20; 1.25; 0.6}
-CLTLayers = [27mm; 0| _
-17mm; 90| _
-54mm; 0| _
-17mm; 90| _
-27mm; 0]
-b_wall = 1.55m
-h_wall = 2.95m
-k_m = 0.7'legno massiccio, sezioni rettangolari
-β_c = 0.1'legno lammellare
-β = 1'coef. di vincolo 
-k_sys = min(0.1; 1 + 0.1*b_wall/m)
-A_lat = b_wall*h_wall
-calc_cltProperties$(CLTLayers; b_wall;h_wall)
-I_x|cm^4
-I_y|cm^4
-W_x|cm^3
-W_y|cm^3
-A_net
-E_0,mean*A_net
-E_0,mean*I_x|kN*m^2
-G_mean*A_net
+'<h1>CLT wall panel with wind and compressive loads. According to Sweedish wood - CLT Handbook</h1>'
+'<hr />
+'<img style="width:400pt;" src="C:/Users/nicola/Google Drive/CALCPAD TEMPLATES/Calcpad-worksheets/Images/CLT_naming.png" alt="CLT_naming.png">
+'<img style="width:400pt;" src="C:/Users/nicola/Google Drive/CALCPAD TEMPLATES/Calcpad-worksheets/Images/CLT_windWall.png" alt="CLT_windWall.png">
+'<img style="width:400pt;" src="C:/Users/nicola/Google Drive/CALCPAD TEMPLATES/Calcpad-worksheets/Images/CLT_windWallOpenings.png" alt="CLT_windWallOpenings.png">
+#hide
+CLTLayers = [30mm; 0| _
+30mm; 90| _
+30mm; 0]
+#show
+'Loads
+F_d = 30kN/m
+p_wind = 2.4kN/m^2
+'Geometry
+h_wall = 2.4m
+b_0 = 4.54m'entire wall
+b_ef = 2.40m'wall without openings
+b_x = b_ef
+timber$(1) #{20; 1.25; 0.9}
+calc_cltProperties$(CLTLayers; b_x; h_wall)
 
+E_0,mean*A_x,net
+E_0,mean*I_x,net|kN*m^2
+G_mean*A_x,net
 
-"Azioni agenti
-q_d = 94.5kN/m
-Q_wind = 0.4kN/m^2
-
-q_wind = 1.5*Q_wind*b_wall
-M_Ed,y = 0kNm
-M_Ed,z = q_wind*h_wall^2/8
-N_Ed = q_d*b_wall
-V_Ed,y = 0kN
-V_Ed,z = 73.27kN
-
-"Tensioni agenti
-σ_c,0,d = N_Ed/A_net|MPa
-'σ_m,y,d = M_Ed,y/W_y|MPa
-'σ_m,z,d = M_Ed,z/W_z|MPa
-'k_cr = 2.5MPa/f_v,k
-'τ_y,d = 1.5*V_Ed,y/(k_cr*A)|MPa
-'τ_z,d = 1.5*V_Ed,z/(k_cr*A)|MPa
-
-
-i_x = sqrt(I_x/A_net)
-i_y = sqrt(I_y/(A_full - A_net))
-
+β_c = 0.2'solid timber
 '<span class="ref"> [EC5 §6.3.2]</span>'
-λ_y = h_wall/i_y
+λ_y = h_wall/i_x,net
 λ_rel,y = λ_y/π*sqrt(f_c,0,k/E_0,05)
 k_y = 0.5*(1 + β_c*(λ_rel,y - 0.3) + λ_rel,y^2)
 k_c,y = 1/(k_y + sqrt(k_y^2 - λ_rel,y^2))
 
+
+q_wind = p_wind*b_x
+f_b,ef = b_0/b_ef'factor to consider the loads where the openings are
+M_Ed,y = f_b,ef*q_wind*h_wall^2/8
+N_Ed,x = f_b,ef*F_d*b_x
+"Tensioni agenti
+σ_c,0,d = N_Ed,x/A_x,net|MPa
+σ_m,y,d = M_Ed,y/W_x,net
+check_inline$((σ_c,0,d/(k_c,y*f_c,0,d) + σ_m,y,d/f_m,d ); 1)
