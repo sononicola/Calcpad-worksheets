@@ -1,4 +1,4 @@
-#include functions/svg_drawing_mod.cpd' < !--COPIED FROM NED CODE - - > '
+#include functions/svg_drawing_mod.cpd' < !--COPIED FROM NED CODE - - >'
 #def draw_layer_h_0$(x$; y$; width$; height$)
 	'<pattern id = "vLines" x="0" y="0" width="40" height="100" patternUnits="userSpaceOnUse">
 	'<line x1="40" y1="0" x2="40" y2="100" style="stroke:black; stroke-width:2; stroke-opacity:1" />
@@ -7,8 +7,8 @@
 	'<rect x="'x$'" y="'y$'" width="'width$'" height="'height$'" fill="url(#vLines)" style="stroke:black; stroke-width:2; fill-opacity:.7; stroke-opacity:1" />
 #end def
 #def draw_layer_h_90$(x$; y$; width$; height$)
-	'<pattern id = "hLines" x="0" y="0" width="100" height="4" patternUnits="userSpaceOnUse">
-	'<line x1="0" y1="4" x2="100" y2="4" style="stroke:black; stroke-width:2; stroke-opacity:1" />
+	'<pattern id = "hLines" x="0" y="0" width="100" height="5" patternUnits="userSpaceOnUse">
+	'<line x1="0" y1="5" x2="100" y2="5" style="stroke:black; stroke-width:2; stroke-opacity:1" />
 	'</pattern > 
 	'<rect x="'x$'" y="'y$'" width="'width$'" height="'height$'" style="stroke:black; stroke-width:2; fill:yellow; fill-opacity:0.6; stroke-opacity:1" />
 	'<rect x="'x$'" y="'y$'" width="'width$'" height="'height$'" fill="url(#hLines)" style="stroke:black; stroke-width:2; fill-opacity:.7; stroke-opacity:1" />
@@ -19,7 +19,7 @@
 	#show
 	#for layer = 1 : n
 		#if cltLayers$.(layer; 2) ≠ 0 ∧ cltLayers$.(layer; 2) ≠ 90
-			"ERROR: CLT LAYERS' DIRECTIONS MUST BE 0° OR 90°
+			'<span class="err">ERROR: CLT LAYERS DIRECTIONS MUST BE 0° OR 90° </span > '
 			#break
 		#end if
 	#loop
@@ -29,15 +29,14 @@
 	#hide
 	WIDTHX = 1*bx$|cm
 	WIDTHY = 1*by$|cm
-	HEIGHT = .5*t_full$|cm
+	HEIGHT = 1*t_full$|cm
 	n = n_rows(cltLayers$)
 	#show
-	 '<svg width = "100"height = "100"viewBox = "0 0 100 100">  
+	 '<svg viewbox="'0' '0' 'WIDTHX + 500mm + WIDTHY' 'HEIGHT'" xmlns="http://www.w3.org/2000/svg" version="1.1" style="font-size:16px; width:15cm;height:10cm;display: block;margin: 0mm auto" >  
 	#for layer = 1 : n
 		#if cltLayers$.(layer; 2) ≡ 0
 			draw_layer_h_0$(0mm; t_cumSum0.(layer)|mm; WIDTHX; cltLayers$.(layer; 1)|mm)
 			draw_layer_h_90$(WIDTHX + 500mm; t_cumSum0.(layer)|mm; WIDTHY; cltLayers$.(layer; 1)|mm)
-			
 		#else 
 			draw_layer_h_90$(0mm; t_cumSum0.(layer)|mm; WIDTHX; cltLayers$.(layer; 1)|mm)
 			draw_layer_h_0$(WIDTHX + 500mm; t_cumSum0.(layer)|mm; WIDTHY; cltLayers$.(layer; 1)|mm)
@@ -46,21 +45,25 @@
 	'</svg>
 	#equ
 #end def
-#def table_CLT$
+#def table_CLT$(cltLayers$; bx$; by$)
 	'<div style="text-align: center;">
 	'<table class="bordered" style="text-align:center;width:15cm;margin: 5mm auto">
 	'<thead>
 	'<tr><th colspan="2">
-	'Caratteristiche del pannello in CLT  
+	'Caratteristiche del pannello in CLT 
+	#equ
 	'</th >  
 	'</tr > 
 	'</thead>
 	#nosub
 	'<tbody>
+	'<tr><td>'t_x,net|mm'</td><td>'t_y,net|mm'</td></tr>
+	'<tr><td>'A_x,full|cm^2'</td><td>'A_y,full|cm^2'</td></tr>
 	'<tr><td>'A_x,net|cm^2'</td><td>'A_y,net|cm^2'</td></tr>
-	'<tr><td>'I_x|cm^4'</td><td>'I_y|cm^4'</td></tr>
-	'<tr><td>'W_x|cm^3'</td><td>'W_y|cm^3'</td></tr>
-	'<tr><td>'i_x|cm'</td><td>'i_y|cm'</td></tr>
+	'<tr><td>'I_x,net|cm^4'</td><td>'I_y,net|cm^4'</td></tr>
+	'<tr><td>'W_x,net|cm^3'</td><td>'W_y,net|cm^3'</td></tr>
+	'<tr><td>'W_z,x,net|cm^3'</td><td>'W_z,y,net|cm^3'</td></tr>
+	'<tr><td>'i_x,net|cm'</td><td>'i_y,net|cm'</td></tr>
 	'</tbody>
 	'</table>
 	'</div>
@@ -89,25 +92,28 @@
 		t_centreFromBottom.(layer) = t_cumSum.(layer) - cltLayers$.(layer; 1)/2
 		t_centreFromMiddle.(layer) = t_centreFromBottom.(layer) - t_full/2
 	#loop
-	I_x = 0mm^4
-	I_y = 0mm^4
+	I_x,net = 0mm^4
+	I_y,net = 0mm^4
 	#for layer = 1 : n
 		#if cltLayers$.(layer; 2) ≡ 0
-			I_x = I_x + width$*(cltLayers$.(layer; 1)^3/12 + cltLayers$.(layer; 1)*t_centreFromMiddle.(layer)^2)
+			I_x,net = I_x,net + width$*(cltLayers$.(layer; 1)^3/12 + cltLayers$.(layer; 1)*t_centreFromMiddle.(layer)^2)
 		#end if
 		#if cltLayers$.(layer; 2) ≡ 90
-			I_y = I_y + height$*(cltLayers$.(layer; 1)^3/12 + cltLayers$.(layer; 1)*t_centreFromMiddle.(layer)^2)
+			I_y,net = I_y,net + height$*(cltLayers$.(layer; 1)^3/12 + cltLayers$.(layer; 1)*t_centreFromMiddle.(layer)^2)
 		#end if
 	#loop
-	W_x = I_x/(t_full/2)
-	W_y = I_y/(t_full/2)
-	A_full = t_full*width$
+	W_x,net = I_x,net/(t_full/2)
+	W_y,net = I_y,net/(t_full/2)
+	A_x,full = t_full*width$
+	A_y,full = t_full*height$
 	A_x,net = t_x,net*width$
 	A_y,net = t_y,net*height$
-	i_x = sqrt(I_x/A_x,net)
-	i_y = sqrt(I_y/A_y,net)
+	i_x,net = sqrt(I_x,net/A_x,net)
+	i_y,net = sqrt(I_y,net/A_y,net)
 	t_cumSum0 = join(0mm; t_cumSum)
+	W_z,x,net = 1/6*t_x,net*width$^2
+	W_z,y,net = 1/6*t_y,net*height$^2
 	#show
-	table_CLT$
+	table_CLT$(cltLayers$; width$; height$)
 	draw_clt$(cltLayers$; width$; height$; t_full)
 #end def
