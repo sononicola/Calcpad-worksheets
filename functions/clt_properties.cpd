@@ -1,5 +1,5 @@
 #include functions/svg_drawing_mod.cpd' < !--COPIED FROM NED CODE - - >'
-#defdraw_layer_h_0$(x$; y$; width$; height$)
+#def draw_layer_h_0$(x$; y$; width$; height$)
 	'<pattern id = "vLines" x="0" y="0" width="40" height="100" patternUnits="userSpaceOnUse">
 	'<line x1="40" y1="0" x2="40" y2="100" style="stroke:black; stroke-width:2; stroke-opacity:1" />
 	'</pattern > 
