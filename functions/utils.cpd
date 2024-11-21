@@ -17,7 +17,11 @@
 #end def
 #def check_inline$(x$; x_max$)
 	    #if x$ ≤ x_max$
-		        x$'≤'x_max$'<span class="ok">Ok ✓</span>
+		#if x_max$ ≡ 1
+			x$|%' <span class="ok">Ok ✓</span>
+		#else
+			        x$'≤'x_max$'<span class="ok">Ok ✓</span>
+		#end if
 	    #else
 		x$'>'x_max$'<span class="err"> NO ✖</span>
 		
@@ -31,3 +35,11 @@
 		
 	    #end if
 #end def
+a = 1/4
+b = 1
+check_inline$(a; b)
+check_ratio_inline$(a; b)
+
+
+
+

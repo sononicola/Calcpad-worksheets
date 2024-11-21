@@ -1,0 +1,74 @@
+'<style>body {zoom:0.7}</style>
+#include functions/CLT_properties.cpd
+#include functions/timber_properties.cpd
+#include functions/utils.cpd
+'<h1>CLT panel verification according to Sweedish wood - CLT Handbook</h1>'
+'<h3>All static images are taken from this book</h3>'
+'HP1: All material strenghts along x axis equal to the y ones, since the material is the same for each layer
+'HP2: The panel is symmetric
+'<hr />
+'<img style="width:400pt;" src="C:/Users/nicola/Google Drive/CALCPAD TEMPLATES/Calcpad-worksheets/Images/CLT_naming.png" alt="CLT_naming.png">
+'<img style="width:400pt;" src="C:/Users/nicola/Google Drive/CALCPAD TEMPLATES/Calcpad-worksheets/Images/CLT_windWall.png" alt="CLT_windWall.png">
+'<img style="width:400pt;" src="C:/Users/nicola/Google Drive/CALCPAD TEMPLATES/Calcpad-worksheets/Images/CLT_windWallOpenings.png" alt="CLT_windWallOpenings.png">
+#hide
+CLTLayers = [40mm; 0| _
+19mm; 90| _
+40mm; 0| _
+19mm; 90| _
+40mm; 0]
+#show
+'Loads
+q_d,SLE = 0.62kN/m
+q_d,SLU = 7.5kN/m
+'Geometry
+b = 2.4m
+l = 5m
+timber$(1) #{20; 1.45; 1.1}
+calc_cltProperties$(CLTLayers; b; l)
+k_sys = min(1.15; 1 + 0.1*b/m)'<span class="ref">[Swedish Wood CLT Handbook §3.1.6]</span>'
+E_0,mean*A_x,net
+E_0,mean*I_x,net|kN*m^2
+G_mean*A_x,net
+
+"Azioni agenti
+M_Ed,y = q_d,SLU*l^2/8
+M_Ed,x = 0kNm
+
+V_Ed,xz = q_d,SLU*l
+V_Ed,yz = 0kN
+V_Ed,xy = 0kN
+V_Ed,yx = 0kN
+"Momento flettente attorno y e x
+σ_m,y,d = M_Ed,y/W_x,net|MPa
+σ_m,x,d = M_Ed,x/W_y,net|MPa
+check_inline$(σ_m,y,d/(k_sys*f_m,d) ; 1)
+check_ratio_inline$(σ_m,y,d ; (k_sys*f_m,d))
+check_inline$(σ_m,x,d/(k_sys*f_m,d) ; 1)
+check_inline$((σ_m,y,d/(k_sys*f_m,d)+(σ_m,x,d/(k_sys*f_m,d))); 1)
+
+"Momento flettente attorno z in direzione x
+'<span class="err">TODO</span>'
+'Wz
+"Momento flettente attorno z in direzione y
+'<span class="err">TODO</span>'
+'Wz
+"Taglio perpendicolare al piano
+'<span class="err">TODO</span>'
+'+rolling shear
+
+"Taglio nel piano
+τ_v,xy,d = V_Ed,xy/A_x,net
+τ_v,yx,d = V_Ed,yx/A_y,net
+check_inline$(τ_v,xy,d/f_v,d ; 1)
+check_inline$(τ_v,yx,d/f_v,d ; 1)
+"Taglio tra i pannelli
+'<span class="err">TODO</span>'
+
+'<img style="width:400pt;" src="C:/Users/nicola/Google Drive/CALCPAD TEMPLATES/Calcpad-worksheets/Images/My.png" alt="My.png">
+'<img style="width:400pt;" src="C:/Users/nicola/Google Drive/CALCPAD TEMPLATES/Calcpad-worksheets/Images/Mx.png" alt="Mx.png">
+'<img style="width:400pt;" src="C:/Users/nicola/Google Drive/CALCPAD TEMPLATES/Calcpad-worksheets/Images/Mz_x.png" alt="Mz_x.png">
+'<img style="width:400pt;" src="C:/Users/nicola/Google Drive/CALCPAD TEMPLATES/Calcpad-worksheets/Images/Mz_y.png" alt="Mz_y.png">
+'<img style="width:400pt;" src="C:/Users/nicola/Google Drive/CALCPAD TEMPLATES/Calcpad-worksheets/Images/Vxz.png" alt="Vxz.png">
+'<img style="width:400pt;" src="C:/Users/nicola/Google Drive/CALCPAD TEMPLATES/Calcpad-worksheets/Images/Vyz.png" alt="Vyz.png">
+'<img style="width:400pt;" src="C:/Users/nicola/Google Drive/CALCPAD TEMPLATES/Calcpad-worksheets/Images/tau.png" alt="tau.png">
+'<img style="width:400pt;" src="C:/Users/nicola/Google Drive/CALCPAD TEMPLATES/Calcpad-worksheets/Images/rolling.png" alt="rolling.png">
