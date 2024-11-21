@@ -35,11 +35,5 @@
 		
 	    #end if
 #end def
-a = 1/4
-b = 1
-check_inline$(a; b)
-check_ratio_inline$(a; b)
-
-
 
 

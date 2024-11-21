@@ -12,18 +12,18 @@
 '<img style="width:400pt;" src="C:/Users/nicola/Google Drive/CALCPAD TEMPLATES/Calcpad-worksheets/Images/CLT_windWallOpenings.png" alt="CLT_windWallOpenings.png">
 #hide
 CLTLayers = [40mm; 0| _
-19mm; 90| _
+33mm; 90| _
 40mm; 0| _
-19mm; 90| _
+33mm; 90| _
 40mm; 0]
 #show
 'Loads
 q_d,SLE = 0.62kN/m
 q_d,SLU = 7.5kN/m
 'Geometry
-b_x = 2.4m'base del pannello
-b_y = 5m'lunghezza del pannello
-timber$(1) #{20; 1.45; 1.1}
+b_x = 1m'base del pannello
+b_y = 5.85m'lunghezza del pannello
+timber$(1) #{20; 1.3; 0.8}
 f_v,rs,k = 2*f_t,90,k
 f_v,rs,d = f_v,rs,k*k_mod/γ_M
 calc_cltProperties$(CLTLayers; b_x;b_y)
@@ -33,13 +33,13 @@ E_0,mean*I_x,net|kN*m^2
 G_mean*A_x,net
 
 "Azioni agenti
-M_Ed,y = q_d,SLU*b_y^2/8
-M_Ed,x = q_d,SLU*b_x^2/8
+M_Ed,y = 31.78kNm
+M_Ed,x = 0kNm
 '<span class="err">TODO</span>'
 ' todoM_Ed,z,y e x
 
-V_Ed,xz = q_d,SLU*b_y/2
-V_Ed,yz = q_d,SLU*b_x/2
+V_Ed,xz = 54.34kN
+V_Ed,yz = 0kN
 V_Ed,xy = 0kN
 V_Ed,yx = 0kN
 "Momento flettente attorno y e x
