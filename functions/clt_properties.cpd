@@ -1,5 +1,5 @@
 #include functions/svg_drawing_mod.cpd' < !--COPIED FROM NED CODE - - >'
-#def draw_layer_h_0$(x$; y$; width$; height$)
+#defdraw_layer_h_0$(x$; y$; width$; height$)
 	'<pattern id = "vLines" x="0" y="0" width="40" height="100" patternUnits="userSpaceOnUse">
 	'<line x1="40" y1="0" x2="40" y2="100" style="stroke:black; stroke-width:2; stroke-opacity:1" />
 	'</pattern > 
@@ -29,10 +29,10 @@
 	#hide
 	WIDTHX = 1*bx$|cm
 	WIDTHY = 1*by$|cm
-	HEIGHT = 1*t_full$|cm
+	HEIGHT = 1*t_full$|mm
 	n = n_rows(cltLayers$)
 	#show
-	 '<svg viewbox="'0' '0' 'WIDTHX + 500mm + WIDTHY' 'HEIGHT'" xmlns="http://www.w3.org/2000/svg" version="1.1" style="font-size:16px; width:15cm;height:10cm;display: block;margin: 0mm auto" >  
+	 '<svg viewbox="'0' '0' 'WIDTHX + 500mm + WIDTHY' 'HEIGHT'" xmlns="http://www.w3.org/2000/svg" version="1.1" style="font-size:16px; width:15cm;height:5cm;display: block;margin: 0mm auto" >  
 	#for layer = 1 : n
 		#if cltLayers$.(layer; 2) ≡ 0
 			draw_layer_h_0$(0mm; t_cumSum0.(layer)|mm; WIDTHX; cltLayers$.(layer; 1)|mm)
@@ -63,6 +63,8 @@
 	'<tr><td>'I_x,net|cm^4'</td><td>'I_y,net|cm^4'</td></tr>
 	'<tr><td>'W_x,net|cm^3'</td><td>'W_y,net|cm^3'</td></tr>
 	'<tr><td>'W_z,x,net|cm^3'</td><td>'W_z,y,net|cm^3'</td></tr>
+	'<tr><td>'S_R,x,net|cm^3'</td><td>'S_R,y,net|cm^3'</td></tr>
+	'<tr><td>'S_x,net|cm^3'</td><td>'S_y,net|cm^3'</td></tr>
 	'<tr><td>'i_x,net|cm'</td><td>'i_y,net|cm'</td></tr>
 	'</tbody>
 	'</table>
@@ -100,6 +102,30 @@
 		#end if
 		#if cltLayers$.(layer; 2) ≡ 90
 			I_y,net = I_y,net + height$*(cltLayers$.(layer; 1)^3/12 + cltLayers$.(layer; 1)*t_centreFromMiddle.(layer)^2)
+		#end if
+	#loop
+	'<!--Find the layer nearest to the panel centre of gravity--> '
+	centreLayer_idx = take(1; find_ge(t_cumSum; t_full/2; 1))
+	S_R,x,net = 0mm^3
+	S_R,y,net = 0mm^3
+	S_x,net = 0mm^3
+	S_y,net = 0mm^3
+	#for layer = 1 : centreLayer_idx
+		#if cltLayers$.(layer; 2) ≡ 0
+			S_R,x,net = S_R,x,net + width$*cltLayers$.(layer; 1)*abs(t_centreFromMiddle.(layer))
+			S_x,net = S_x,net + width$*cltLayers$.(layer; 1)*abs(t_centreFromMiddle.(layer))
+			'<!--If the panel centre of gravity lies in the layer in question--> '
+			#if layer ≡ centreLayer_idx
+				S_x,net = S_x,net + width$*(cltLayers$.(layer; 1)/2 - t_centreFromMiddle.(layer))^2/2
+			#end if
+		#end if
+		#if cltLayers$.(layer; 2) ≡ 90
+			S_R,y,net = S_R,y,net + height$*cltLayers$.(layer; 1)*abs(t_centreFromMiddle.(layer))
+			S_y,net = S_y,net + height$*cltLayers$.(layer; 1)*abs(t_centreFromMiddle.(layer))
+			'<!--If the panel centre of gravity lies in the layer in question--> '
+			#if layer ≡ centreLayer_idx
+				S_y,net = S_y,net + height$*(cltLayers$.(layer; 1)/2 - t_centreFromMiddle.(layer))^2/2
+			#end if
 		#end if
 	#loop
 	W_x,net = I_x,net/(t_full/2)
