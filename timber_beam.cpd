@@ -63,3 +63,23 @@ l_ef = β*l
 k_crit = switch(λ_rel,m < 0.75; 1; λ_rel,m < 1.4; 1.56 - 0.75*λ_rel,m; 1/λ_rel,m^2)
 check_inline_1$(σ_m,y,d/(k_crit*f_m,d))
 check_inline_1$((σ_m,y,d/(k_crit*f_m,d))^2 + σ_c,0,d/(k_c,z*f_c,0,d))
+
+"Freccia
+q_G = 8.64kN/m
+q_Q1 = 10.92kN/m
+k_def = 0.6
+ψ_21 = 0.2
+w_lim,inst = l/300|mm
+w_lim,fin = l/200|mm
+w(q) = 5/384*((q*l^4)/(E_0,mean*I_y)) + 1.2*(1/8)*(q*l^2/(G_mean*A))|mm
+w(1kN/m)
+
+w_inst,G = w(q_G)
+w_inst,Q1 = w(q_Q1)
+w_inst,TOT = w_inst,G + w_inst,Q1
+check_inline$(w_inst,TOT;w_lim,inst)
+
+w_fin,G1 = w_inst,G*(1 + k_def)
+w_fin,Q1 = w_inst,Q1*(1 + ψ_21*k_def)
+w_fin,TOT = w_fin,G1 + w_fin,Q1
+check_inline$(w_fin,TOT;w_lim,fin)
