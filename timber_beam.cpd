@@ -28,13 +28,13 @@ k_cr = 2.5MPa/f_v,k
 τ_z,d = 1.5*V_Ed,z/(k_cr*A)|MPa
 
 "Verifica flessione 
-check_inline$((σ_m,y,d/f_m,d + k_m*(σ_m,z,d/f_m,d)); 1)
-check_inline$((k_m*(σ_m,y,d/f_m,d) + σ_m,z,d/f_m,d); 1)
+check_inline_1$((σ_m,y,d/f_m,d + k_m*(σ_m,z,d/f_m,d)))
+check_inline_1$((k_m*(σ_m,y,d/f_m,d) + σ_m,z,d/f_m,d))
 
 "Verifica flessione e compressione combinata
 '<span class="ref"> [EC5 §6.2.4]</span>'
-check_inline$(((σ_c,0,d/f_c,0,d)^2 + σ_m,y,d/f_m,d + k_m*(σ_m,z,d/f_m,d)); 1)
-check_inline$(((σ_c,0,d/f_c,0,d)^2 + k_m*(σ_m,y,d/f_m,d) + σ_m,z,d/f_m,d); 1)
+check_inline_1$(((σ_c,0,d/f_c,0,d)^2 + σ_m,y,d/f_m,d + k_m*(σ_m,z,d/f_m,d)))
+check_inline_1$(((σ_c,0,d/f_c,0,d)^2 + k_m*(σ_m,y,d/f_m,d) + σ_m,z,d/f_m,d))
 
 "Verifica a taglio
 check_ratio_inline$(τ_y,d; f_v,d)
@@ -52,8 +52,8 @@ k_c,y = 1/(k_y + sqrt(k_y^2 - λ_rel,y^2))
 k_z = 0.5*(1 + β_c*(λ_rel,z - 0.3) + λ_rel,z^2)
 k_c,z = 1/(k_z + sqrt(k_z^2 - λ_rel,z^2))
 
-check_inline$((σ_c,0,d/(k_c,y*f_c,0,d) + σ_m,y,d/f_m,d + k_m*(σ_m,z,d/f_m,d)); 1)
-check_inline$((σ_c,0,d/(k_c,z*f_c,0,d) + k_m*(σ_m,y,d/f_m,d) + σ_m,z,d/f_m,d); 1)
+check_inline_1$((σ_c,0,d/(k_c,y*f_c,0,d) + σ_m,y,d/f_m,d + k_m*(σ_m,z,d/f_m,d)))
+check_inline_1$((σ_c,0,d/(k_c,z*f_c,0,d) + k_m*(σ_m,y,d/f_m,d) + σ_m,z,d/f_m,d))
 
 "Verifica instabilità di trave 
 '<span class="ref"> [EC5 §6.3.3]</span>'
@@ -61,5 +61,5 @@ l_ef = β*l
 σ_m,crit = 0.78*b^2/(h*l_ef)*E_0,05
 λ_rel,m = sqrt(f_m,k/σ_m,crit)
 k_crit = switch(λ_rel,m < 0.75; 1; λ_rel,m < 1.4; 1.56 - 0.75*λ_rel,m; 1/λ_rel,m^2)
-check_inline$(σ_m,y,d/(k_crit*f_m,d); 1)
-check_inline$((σ_m,y,d/(k_crit*f_m,d))^2 + σ_c,0,d/(k_c,z*f_c,0,d); 1)
+check_inline_1$(σ_m,y,d/(k_crit*f_m,d))
+check_inline_1$((σ_m,y,d/(k_crit*f_m,d))^2 + σ_c,0,d/(k_c,z*f_c,0,d))

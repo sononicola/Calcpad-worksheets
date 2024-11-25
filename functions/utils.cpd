@@ -17,23 +17,22 @@
 #end def
 #def check_inline$(x$; x_max$)
 	    #if x$ ≤ x_max$
-		#if x_max$ ≡ 1
-			x$|%' <span class="ok">Ok ✓</span>
-		#else
-			        x$'≤'x_max$'<span class="ok">Ok ✓</span>
-		#end if
+		        x$'≤'x_max$'<span class="ok"> Ok ✓</span>
 	    #else
 		x$'>'x_max$'<span class="err"> NO ✖</span>
-		
+	    #end if
+#end def
+#def check_inline_1$(x$)
+	    #if x$ ≤ 1
+		x$|%' <span class="ok"> Ok ✓</span>
+	    #else
+		x$|%' <span class="err"> NO ✖</span>
 	    #end if
 #end def
 #def check_ratio_inline$(x$; x_max$)
 	    #if x$/x_max$ ≤ 1
-		        x$/x_max$|%'<span class="ok">Ok ✓</span>
+		        x$/x_max$|%'<span class="ok"> Ok ✓</span>
 	    #else
 		x$/x_max$|%'<span class="err"> NO ✖</span>
-		
 	    #end if
 #end def
-
-
