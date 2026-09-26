@@ -4,7 +4,7 @@
 	'<thead>
 	'<tr><th colspan="2">
 	'Caratteristiche sezione rettangolare 
-	'<p>'b = ? {120}mm'  'h = ? {240}mm'  'γ = ? {5}kN/m^3' </p > 
+	#UI b = 120mm'  'h = 240mm'  'γ = 5kN/m^3 
 	'</th >  
 	'</tr > 
 	'</thead>
@@ -32,14 +32,16 @@
 	'<table class="bordered" style="text-align:center;width:15cm;margin: 5mm auto">
 	'<thead>
 	'<tr><th colspan="2">
-	'Caratteristiche sezione rettangolare 
-	'<p>'b_num$ = ? {120}mm'  'h_num$ = ? {240}mm'  'γ = ? {5}kN/m^3' </p > 
+	#noc
+	'Caratteristiche sezione rettangolare:' num$
+	#end noc
+	#UI b_num$ = 120mm'  'h_num$ = 240mm'  'γ_num$ = 5kN/m^3 
 	'</th >  
 	'</tr > 
 	'</thead>
 	#hide
 	A_num$ = b_num$*h_num$|cm^2
-	g_1,k,num$ = A_num$*γ|kN/m
+	g_1,k,num$ = A_num$*γ_num$|kN/m
 	I_y,num$ = b_num$*h_num$^3/12|cm^4
 	I_z,num$ = h_num$*b_num$^3/12|cm^4
 	W_y,num$ = b_num$*h_num$^2/6|cm^3
